@@ -31,6 +31,7 @@ charSet makeCharSet(int numUniqueElements, int *counts, char *elements)
     return myCharSet;
 }
 
+
 //print out all elements in set and their respective quantities
 //
 void printCharSet(charSet myCharSet, FILE *fp)
@@ -64,14 +65,24 @@ int getSize(charSet mySet){
   }
   return setSize;
 }
+//copies the data myElem into duplicate, returns duplicate
+charElement copyCharElement(charElement myElem){
+  charElement duplicite;
+  duplicite.value = myElem.value;
+  duplicite.count = myElem.count;
+  return duplicite;
+}
 
+//creates charElemColection cloneSet, fills with data of mySet, returns cloneSet
 charSet copySet(charSet mySet){
   int i;
-  charSet myNewSet = (charSet) malloc(sizeof(charElemColection));
-  myNewSet->elements = (charElement*) malloc(sizeof(charElement)*mySet->numElements);
-  for(i = 0; i < mySet->numElements; ++i){
-    myNewSet->
+  charSet cloneSet = (charElemColection *) malloc(sizeof(charElemColection));
+  cloneSet->elements = (charElement *) malloc(sizeof(charElement)*(mySet->numElements));
+  cloneSet->numElements = mySet->numElements;
+  for(i=0; i<mySet->numElements; ++i){
+    cloneSet->elements[i] = copyCharElement(mySet->elements[i]);
   }
+  return cloneSet;
 }
 
 
@@ -86,8 +97,20 @@ int main()
   printCharSet(myFirstSet, NULL);
 
   FILE *fp=fopen("output.txt", "w");
+  printf("myFirstSet\n");
   printCharSet(myFirstSet, fp);
   fclose(fp);
+
+  printf("number of elements: %d\n", getSize(myFirstSet));
+
+  charSet mySecondSet = copySet(myFirstSet);
+
+  printCharSet(mySecondSet, NULL);
+
+  FILE *fp1=fopen("output.txt", "a");
+  printf("mySecondSet\n");
+  printCharSet(mySecondSet, fp1);
+  fclose(fp1);
 
   printf("number of elements: %d\n", getSize(myFirstSet));
 
