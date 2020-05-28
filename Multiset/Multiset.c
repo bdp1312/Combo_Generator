@@ -3,7 +3,7 @@
 #include <stdbool.h>
 
 
-#include "Set.h"
+#include "Multiset.h"
 
 //creates char set elements
 charElement makeCharElement(char val, int count)
